@@ -13,7 +13,6 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author gregory green
  */
-@Component
 public class RabbitMQStreamWriter implements ItemWriter<Payment> {
 
     private final Producer producer;

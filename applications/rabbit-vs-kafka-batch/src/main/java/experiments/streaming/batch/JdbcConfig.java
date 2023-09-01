@@ -23,6 +23,9 @@ public class JdbcConfig implements BeanPostProcessor {
     @Value("${spring.liquibase.defaultSchema}")
     private String schemaName;
 
+    @Value("${spring.datasource.username}")
+    private String userName;
+
     @SneakyThrows
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
@@ -31,12 +34,6 @@ public class JdbcConfig implements BeanPostProcessor {
                  var statement = conn.createStatement()) {
                 log.info("Going to create DB schema '{}' if not exists.", schemaName);
                 statement.execute("create schema if not exists " + schemaName);
-
-//                log.info("Create spring batch databases");
-//                var ddl = new ClassPathResource(postgres_ddl_path).getContentAsString(StandardCharsets.UTF_8);
-//                log.info("DDL: \n {}",ddl);
-//
-//                statement.execute(ddl);
 
             } catch (SQLException e) {
                 throw new RuntimeException("Failed to create schema '" + schemaName + "'", e);

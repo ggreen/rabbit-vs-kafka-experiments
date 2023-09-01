@@ -38,6 +38,12 @@ public class BatchConfig {
     @Value("${spring.application.name}")
     private String applicationName;
 
+    @Value("${spring.profiles.active}")
+    private String jobName;
+
+    @Value("${spring.profiles.active}-process")
+    private String stepName;
+
     @Bean
     FlatFileItemReader reader()
     {
@@ -70,7 +76,7 @@ public class BatchConfig {
     public Job importUserJob(
             JobRepository jobRepository,
                              JobExecutionListener listener, Step step1) {
-        return new JobBuilder(applicationName,jobRepository)
+        return new JobBuilder(jobName,jobRepository)
                 .start(step1)
                 .listener(listener)
                 .build();
@@ -91,6 +97,7 @@ public class BatchConfig {
             }
         };
     }
+
     @Bean
     public Step step1(ItemWriter<Payment> writer,
                       JobRepository jobRepository,
@@ -99,7 +106,7 @@ public class BatchConfig {
 
         taskExecutor.setCorePoolSize(corePoolSize);
 
-        return new StepBuilder("step1",jobRepository)
+        return new StepBuilder(stepName,jobRepository)
                 .<Payment, Payment> chunk(chunkSize, transactionManager)
                 .reader(reader())
                 .writer(writer)
