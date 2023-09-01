@@ -1,11 +1,57 @@
-# Running RabbitMQ
+
+# Step UP
+## Prerequisite
+
+- [Java Version 17](https://jdk.java.net/17/)
+- RabbitMQ Version 3.11 and highers
+- [Apache Kafka](https://kafka.apache.org) version 3.5 and higher
+
+
+## Running RabbitMQ
 
 Setup [RabbitMQ](https://rabbitmq.com/) 
 
 - [Download/Install](https://rabbitmq.com/download.html)
 - [Enable Stream Plugin](https://rabbitmq.com/stream.html#enabling-plugin)
 
-# Postgres Database
+
+## Kafka
+
+### Setup 
+
+- [Download Apache Kafka](https://kafka.apache.org/downloads)
+
+### Running Kafka
+
+- See https://kafka.apache.org/quickstart
+
+Example
+
+
+#### Start Zookeeper
+
+Start Terminal Shell
+
+Start the ZooKeeper service
+
+```shell
+export KAFKA_HOME=/Users/devtools/integration/messaging/apacheKafka/kafka_2.13-3.5.1
+cd $KAFKA_HOME
+bin/zookeeper-server-start.sh config/zookeeper.properties
+```
+
+#### Start Broker
+
+Start Terminal Shell
+Start the Kafka broker service
+
+```shell
+export KAFKA_HOME=/Users/devtools/integration/messaging/apacheKafka/kafka_2.13-3.5.1
+cd $KAFKA_HOME
+bin/kafka-server-start.sh config/server.properties
+```
+
+## Postgres Database
 
 
 This project requires a Spring Batch job repository.

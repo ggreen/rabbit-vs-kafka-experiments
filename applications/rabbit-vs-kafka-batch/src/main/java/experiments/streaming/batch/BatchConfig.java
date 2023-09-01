@@ -5,6 +5,7 @@ import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.launch.support.TaskExecutorJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -17,10 +18,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 import showcase.high.throughput.microservices.domain.Payment;
+
+import java.time.LocalDateTime;
+
+import static nyla.solutions.core.util.Organizer.toMap;
 
 @Configuration
 @EnableBatchProcessing(tablePrefix = "${spring.liquibase.defaultSchema}.batch_")
@@ -35,6 +39,7 @@ public class BatchConfig {
 
     @Value("${batch.core.pool.size}")
     private int corePoolSize;
+
     @Value("${spring.application.name}")
     private String applicationName;
 
@@ -64,45 +69,36 @@ public class BatchConfig {
         jobLauncher.afterPropertiesSet();
         return jobLauncher;
     }
-    @Bean
-    CommandLineRunner runner(Job job, JobLauncher jobLauncher)
-    {
-        return args -> {
-            jobLauncher.run(job,new JobParameters());
-        };
-    }
 
     @Bean
     public Job importUserJob(
             JobRepository jobRepository,
-                             JobExecutionListener listener, Step step1) {
+                             JobExecutionListener listener, Step step) {
         return new JobBuilder(jobName,jobRepository)
-                .start(step1)
+                .start(step)
+                .incrementer(new RunIdIncrementer())
                 .listener(listener)
                 .build();
     }
 
     @Bean
-    JobExecutionListener listener(JdbcTemplate jdbcTemplate)
+    CommandLineRunner runner(JobLauncher jobLauncher, Job job)
     {
-        return new JobExecutionListener() {
-            @Override
-            public void beforeJob(JobExecution jobExecution) {
-                log.info("START");
-            }
+        return args -> {
 
-            @Override
-            public void afterJob(JobExecution jobExecution) {
-                log.info("END");
-            }
+            jobLauncher.run(job,new JobParameters(
+                    toMap("start",
+                            new JobParameter<LocalDateTime>(LocalDateTime.now(),
+                                    LocalDateTime.class))));
+
         };
     }
 
     @Bean
-    public Step step1(ItemWriter<Payment> writer,
-                      JobRepository jobRepository,
-                      PlatformTransactionManager transactionManager,
-                      ThreadPoolTaskExecutor taskExecutor) {
+    public Step step(ItemWriter<Payment> writer,
+                     JobRepository jobRepository,
+                     PlatformTransactionManager transactionManager,
+                     ThreadPoolTaskExecutor taskExecutor) {
 
         taskExecutor.setCorePoolSize(corePoolSize);
 

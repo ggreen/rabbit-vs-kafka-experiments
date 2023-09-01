@@ -1,11 +1,10 @@
-package experiments.streaming.batch.writer;
+package experiments.streaming.batch.rabbit.writer;
 
 import com.rabbitmq.stream.ConfirmationHandler;
 import com.rabbitmq.stream.Producer;
 import nyla.solutions.core.patterns.conversion.Converter;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.stereotype.Component;
 import showcase.high.throughput.microservices.domain.Payment;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -19,6 +18,7 @@ public class RabbitMQStreamWriter implements ItemWriter<Payment> {
     private final Converter<Payment,byte[]> serializer;
     private final ConfirmationHandler handler;
     private static final AtomicLong count = new AtomicLong();
+
 
     public RabbitMQStreamWriter(Producer producer, Converter<Payment,byte[]> serializer) {
         this.producer = producer;
@@ -34,6 +34,10 @@ public class RabbitMQStreamWriter implements ItemWriter<Payment> {
                         .applicationProperties().entry("contentType",
                                 "application/json").messageBuilder()
                         .addData(serializer.convert(transaction)).build(),handler));
+    }
+
+    public long count() {
+        return count.get();
     }
 }
 

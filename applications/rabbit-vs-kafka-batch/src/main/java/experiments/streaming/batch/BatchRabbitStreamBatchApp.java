@@ -1,6 +1,7 @@
 package experiments.streaming.batch;
 
-import org.springframework.batch.core.launch.support.CommandLineJobRunner;
+import experiments.streaming.batch.rabbit.RabbitStreamPurger;
+import nyla.solutions.core.util.Config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,8 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BatchRabbitStreamBatchApp {
 
 	public static void main(String[] args) throws Exception {
-		System.exit(SpringApplication.exit(SpringApplication.run(BatchRabbitStreamBatchApp.class, args)));
-//		CommandLineJobRunner.main(args);
+		var settings = Config.loadArgs(args);
+
+		if("rabbit".equals(settings.getProperty("spring.profiles.active")))
+			RabbitStreamPurger.purgeStream(args);
+
+		SpringApplication.exit(SpringApplication.run(BatchRabbitStreamBatchApp.class, args));
 	}
 
 }

@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.stream.Environment;
 import com.rabbitmq.stream.Producer;
-import experiments.streaming.batch.writer.RabbitMQStreamWriter;
+import experiments.streaming.batch.rabbit.writer.RabbitMQStreamWriter;
+import lombok.extern.slf4j.Slf4j;
 import nyla.solutions.core.patterns.conversion.Converter;
-import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +18,14 @@ import showcase.high.throughput.microservices.domain.Payment;
 import java.nio.charset.StandardCharsets;
 
 @Configuration
-@Profile("rabbitmq")
+@Profile("rabbit")
+@Slf4j
 public class RabbitConfig {
+
+    public RabbitConfig()
+    {
+        log.info("Creating");
+    }
 
     @Value("${rabbitmq.stream.name}")
     private String streamName;
@@ -30,8 +38,6 @@ public class RabbitConfig {
     Environment rabbitEnv()
     {
         var env = Environment.builder().build();
-        env.streamCreator().stream(streamName).create();
-
         return env;
     }
 
@@ -60,8 +66,33 @@ public class RabbitConfig {
                 .batchSize(batchSize)
                 .build();
     }
+
     @Bean
-    ItemWriter<Payment> itemWriter(Producer producer, Converter<Payment, byte[]> converter)
+    JobExecutionListener listener(Environment environment, RabbitMQStreamWriter writer)
+    {
+        return new JobExecutionListener() {
+
+            @Override
+            public void beforeJob(JobExecution jobExecution) {
+
+//                log.info("Deleting stream {} ",streamName);
+//
+//                environment.deleteStream(streamName);
+//                log.info("Deleted stream {} ",streamName);
+//
+//                environment.streamCreator().stream(streamName).create();
+            }
+
+
+            @Override
+            public void afterJob(JobExecution jobExecution) {
+                log.info("****** Process COUNT: {}",writer.count());
+            }
+        };
+    }
+
+    @Bean
+    RabbitMQStreamWriter itemWriter(Producer producer, Converter<Payment, byte[]> converter)
     {
         return new RabbitMQStreamWriter(producer,converter);
     }
