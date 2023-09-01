@@ -73,18 +73,6 @@ public class RabbitConfig {
         return new JobExecutionListener() {
 
             @Override
-            public void beforeJob(JobExecution jobExecution) {
-
-//                log.info("Deleting stream {} ",streamName);
-//
-//                environment.deleteStream(streamName);
-//                log.info("Deleted stream {} ",streamName);
-//
-//                environment.streamCreator().stream(streamName).create();
-            }
-
-
-            @Override
             public void afterJob(JobExecution jobExecution) {
                 log.info("****** Process COUNT: {}",writer.count());
             }

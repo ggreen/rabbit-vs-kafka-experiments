@@ -1,5 +1,10 @@
+# Overview
 
-# Step UP
+This project provides a simplified way to evaluate 
+performance differences between Apache Kafka and RabbitMQ streams
+
+# Step up
+
 ## Prerequisite
 
 - [Java Version 17](https://jdk.java.net/17/)
