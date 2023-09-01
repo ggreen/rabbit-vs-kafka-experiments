@@ -3,9 +3,7 @@
 This project provides a simplified way to evaluate 
 performance differences between Apache Kafka and RabbitMQ streams
 
-# Step up
-
-## Prerequisite
+### Prerequisite
 
 - [Java Version 17](https://jdk.java.net/17/)
 - RabbitMQ Version 3.11 and highers
@@ -20,24 +18,17 @@ Setup [RabbitMQ](https://rabbitmq.com/)
 - [Enable Stream Plugin](https://rabbitmq.com/stream.html#enabling-plugin)
 
 
-## Kafka
+## Running Kafka
 
-### Setup 
 
 - [Download Apache Kafka](https://kafka.apache.org/downloads)
-
-### Running Kafka
-
 - See https://kafka.apache.org/quickstart
-
-Example
-
 
 #### Start Zookeeper
 
-Start Terminal Shell
-
-Start the ZooKeeper service
+- Start Zookeeper
+- Start Terminal Shell
+- Start the ZooKeeper service
 
 ```shell
 export KAFKA_HOME=/Users/devtools/integration/messaging/apacheKafka/kafka_2.13-3.5.1
@@ -64,18 +55,8 @@ You can use Postgres by default.
 
 -  [Download/Install Postgres](https://www.postgresql.org/download/)
 
-## Setup Postgres database.
 
-
-Create Job Repository
-
-
-For convenience, the [job repository scheme DDL](https://raw.githubusercontent.com/spring-projects/spring-batch/5.0.x/spring-batch-core/src/main/resources/org/springframework/batch/core/schema-postgresql.sql) is located in this repo
-
-See deployments/database/ddl/schema-postgresql.sql
-
-
-# Generate Input File
+## Generate Input File
 Generate Input file with 2 Million Records
 
 ```shell
