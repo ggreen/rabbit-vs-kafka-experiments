@@ -4,8 +4,8 @@
                              http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.vmware</groupId>
-    <artifactId>microservices-high-throughput-parent</artifactId>
+    <groupId>experiments.streaming</groupId>
+    <artifactId>rabbit-vs-kafka-experiments-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <name>microservices-high-throughput-parent</name>

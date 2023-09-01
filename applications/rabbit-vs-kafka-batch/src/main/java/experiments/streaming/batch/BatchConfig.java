@@ -1,10 +1,7 @@
 package experiments.streaming.batch;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.JobExecutionListener;
-import org.springframework.batch.core.Step;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -16,6 +13,7 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.RecordFieldSetMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
@@ -25,7 +23,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import showcase.high.throughput.microservices.domain.Payment;
 
 @Configuration
-@EnableBatchProcessing
+@EnableBatchProcessing(tablePrefix = "${spring.liquibase.defaultSchema}.batch_")
 @Slf4j
 public class BatchConfig {
 
@@ -53,6 +51,20 @@ public class BatchConfig {
                .build();
     }
 
+    @Bean
+    public JobLauncher jobLauncher(JobRepository jobRepository) throws Exception {
+        TaskExecutorJobLauncher jobLauncher = new TaskExecutorJobLauncher();
+        jobLauncher.setJobRepository(jobRepository);
+        jobLauncher.afterPropertiesSet();
+        return jobLauncher;
+    }
+    @Bean
+    CommandLineRunner runner(Job job, JobLauncher jobLauncher)
+    {
+        return args -> {
+            jobLauncher.run(job,new JobParameters());
+        };
+    }
 
     @Bean
     public Job importUserJob(

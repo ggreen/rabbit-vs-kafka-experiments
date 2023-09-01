@@ -13,6 +13,16 @@ You can use Postgres by default.
 
 -  [Download/Install Postgres](https://www.postgresql.org/download/)
 
+## Setup Postgres database.
+
+
+Create Job Repository
+
+
+For convenience, the [job repository scheme DDL](https://raw.githubusercontent.com/spring-projects/spring-batch/5.0.x/spring-batch-core/src/main/resources/org/springframework/batch/core/schema-postgresql.sql) is located in this repo
+
+See deployments/database/ddl/schema-postgresql.sql
+
 
 # Generate Input File
 Generate Input file with 2 Million Records
