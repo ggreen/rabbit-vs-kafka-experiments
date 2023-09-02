@@ -46,15 +46,4 @@ public class KafkaConfig {
         return TopicBuilder.name(topicName).build();
     }
 
-    @Bean
-    JobExecutionListener listener()
-    {
-        return new JobExecutionListener() {
-
-            @Override
-            public void afterJob(JobExecution jobExecution) {
-                log.info("****** Process Complete ");
-            }
-        };
-    }
 }

@@ -38,6 +38,7 @@ public class RabbitConfig {
     Environment rabbitEnv()
     {
         var env = Environment.builder().build();
+        env.streamCreator().stream(streamName).create();
         return env;
     }
 
@@ -65,18 +66,6 @@ public class RabbitConfig {
         return environment.producerBuilder().stream(streamName)
                 .batchSize(batchSize)
                 .build();
-    }
-
-    @Bean
-    JobExecutionListener listener(Environment environment, RabbitMQStreamWriter writer)
-    {
-        return new JobExecutionListener() {
-
-            @Override
-            public void afterJob(JobExecution jobExecution) {
-                log.info("****** Process COUNT: {}",writer.count());
-            }
-        };
     }
 
     @Bean

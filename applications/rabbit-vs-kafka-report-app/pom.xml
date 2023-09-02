@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>experiments.streaming</groupId>
-    <artifactId>rabbit-vs-kafka-batch</artifactId>
+    <artifactId>rabbit-vs-kafka-report-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rabbit-vs-kafka-batch</name>
-    <description>rabbit-vs-kafka-batch</description>
+    <name>rabbit-vs-kafka-report-app</name>
+    <description>rabbit-vs-kafka-report-app</description>
     <properties>
         <java.version>17</java.version>
     </properties>

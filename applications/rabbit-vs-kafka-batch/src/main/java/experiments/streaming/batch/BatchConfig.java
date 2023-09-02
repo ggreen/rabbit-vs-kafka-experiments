@@ -72,12 +72,10 @@ public class BatchConfig {
 
     @Bean
     public Job importUserJob(
-            JobRepository jobRepository,
-                             JobExecutionListener listener, Step step) {
+            JobRepository jobRepository, Step step) {
         return new JobBuilder(jobName,jobRepository)
                 .start(step)
                 .incrementer(new RunIdIncrementer())
-                .listener(listener)
                 .build();
     }
 

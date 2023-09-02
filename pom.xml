@@ -11,6 +11,8 @@
     <name>microservices-high-throughput-parent</name>
     <modules>
         <module>components/throughput-domain</module>
+        <module>components/rabbit-stream-purge</module>
+        <module>components/rabbit-stream-batch</module>
         <module>applications/rabbit-vs-kafka-batch</module>
     </modules>
     <build>

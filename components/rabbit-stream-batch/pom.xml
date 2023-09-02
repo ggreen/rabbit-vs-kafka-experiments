@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>experiments.streaming</groupId>
-    <artifactId>rabbit-vs-kafka-batch</artifactId>
+    <artifactId>rabbit-stream-batch</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rabbit-vs-kafka-batch</name>
-    <description>rabbit-vs-kafka-batch</description>
+    <name>rabbit-stream-batch</name>
+    <description>rabbit-stream-batch</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -91,11 +91,6 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>experiments.streaming</groupId>
-            <artifactId>rabbit-stream-batch</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
