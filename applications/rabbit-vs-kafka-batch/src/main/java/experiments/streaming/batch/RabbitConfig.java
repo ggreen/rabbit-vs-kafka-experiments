@@ -1,21 +1,15 @@
 package experiments.streaming.batch;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.stream.Environment;
 import com.rabbitmq.stream.Producer;
 import experiments.streaming.batch.rabbit.writer.RabbitMQStreamWriter;
 import lombok.extern.slf4j.Slf4j;
 import nyla.solutions.core.patterns.conversion.Converter;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import showcase.high.throughput.microservices.domain.Payment;
-
-import java.nio.charset.StandardCharsets;
 
 @Configuration
 @Profile("rabbit")
@@ -42,23 +36,7 @@ public class RabbitConfig {
         return env;
     }
 
-    @Bean
-    ObjectMapper objectMapper()
-    {
-        return new ObjectMapper();
-    }
 
-    @Bean
-    Converter<Payment,byte[]> serializer(ObjectMapper objectMapper)
-    {
-        return transaction -> {
-            try {
-                return objectMapper.writeValueAsString(transaction).getBytes(StandardCharsets.UTF_8);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-        };
-    }
 
     @Bean
     Producer producer(Environment environment)

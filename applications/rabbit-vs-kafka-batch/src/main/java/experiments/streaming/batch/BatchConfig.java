@@ -1,7 +1,10 @@
 package experiments.streaming.batch;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.*;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameter;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -100,6 +103,8 @@ public class BatchConfig {
 
         taskExecutor.setCorePoolSize(corePoolSize);
 
+
+
         return new StepBuilder(stepName,jobRepository)
                 .<Payment, Payment> chunk(chunkSize, transactionManager)
                 .reader(reader())
@@ -107,5 +112,6 @@ public class BatchConfig {
                 .taskExecutor(taskExecutor)
                 .build();
     }
+
 
 }
