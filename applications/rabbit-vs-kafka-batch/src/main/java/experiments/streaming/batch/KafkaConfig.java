@@ -14,21 +14,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.config.TopicBuilder;
 import experiments.streaming.domain.Payment;
-
 import java.util.Map;
 
+/**
+ * @author gregory green
+ */
 @Configuration
 @Profile("kafka")
 @Slf4j
 public class KafkaConfig {
 
-    @Value("${spring.kafka.producer.value-serializer}")
-    private String producerValueSerializer;
-
-    @Value("${spring.kafka.producer.acks}")
-    private String producerAcks;
-
-    @Value("${batch.apache.kafka.topic.name:test-transactions}")
+    @Value("${batch.apache.kafka.topic.name:transactions}")
     private String topicName;
 
 

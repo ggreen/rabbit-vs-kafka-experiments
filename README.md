@@ -49,18 +49,60 @@ cd scripts/generate_batch_file
 python generate_transaction_file.py
 ```
 
-# Running RabbitMQ Batch
+# Spring Batch Application 
 
-Create an Application Properties
+Publish 2 million records
+
+## Apache Kafka
+
+Example 
+
+```shell
+java -jar applications/rabbit-vs-kafka-batch/target/rabbit-vs-kafka-batch-0.0.1-SNAPSHOT.jar  --spring.profiles.active=kafka --bootstrap.servers=localhost:9092 --kafka.producer.topic=transaction --value.serializer=org.apache.kafka.common.serialization.ByteArraySerializer --key.serializer=org.apache.kafka.common.serialization.StringSerializer --spring.datasource.url=jdbc:postgresql://localhost:5432/postgres --spring.datasource.username=postgres --spring.datasource.password=
+```
+
+## RabbitMQ streams
 
 Example
 
+```shell
+java -jar applications/rabbit-vs-kafka-batch/target/rabbit-vs-kafka-batch-0.0.1-SNAPSHOT.jar  --spring.profiles.active=rabbit --spring.rabbitmq.stream.uri=rabbitmq-stream://localhost:5552 --spring.rabbitmq.stream.name=transactions --spring.rabbitmq.stream.username=guest --spring.rabbitmq.stream.password=guest --spring.datasource.url=jdbc:postgresql://localhost:5432/postgres --spring.datasource.username=postgres --spring.datasource.password=
+```
 
 
+# Report App
 
-## Cleanup 
+You can use the [rabbit-vs-kafka-report-app](applications/rabbit-vs-kafka-report-app) to view the results.
+
+## Run Application
+
+
+Example
+
+```shell
+java -jar applications/rabbit-vs-kafka-report-app/target/rabbit-vs-kafka-report-app-0.0.1-SNAPSHOT.jar --spring.datasource.url=jdbc:postgresql://localhost:5432/postgres --spring.datasource.username=postgres --spring.datasource.password=
+```
+
+
+Open Browser
+
+```shell
+open http://localhost:8080
+```
+
+# Cleanup Data 
+
 ### Delete Kafka Topic
 
 ```shell
-$KAFKA_HOME/bin/kafka-topics.sh --bootstrap-server=localhost:$KAFKA_BROKER_PORT  --delete --topic transaction
+$KAFKA_HOME/bin/kafka-topics.sh --bootstrap-server=localhost:9092  --delete --topic transaction
 ```
+### Delete RabbitMQ Stream
+
+```shell
+rabbitmqctl --node rabbit delete_queue transaction
+```
+
+
+
+# Running

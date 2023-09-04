@@ -11,32 +11,38 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import experiments.streaming.domain.Payment;
 
+import java.util.List;
+
 @Configuration
 @Profile("rabbit")
 @Slf4j
 public class RabbitConfig {
 
-    public RabbitConfig()
-    {
-        log.info("Creating");
-    }
-
-    @Value("${rabbitmq.stream.name}")
+    @Value("${spring.rabbitmq.stream.name}")
     private String streamName;
 
 
     @Value("${rabbitmq.stream.producer.batch.size:500}")
     private int batchSize;
 
+    @Value("${spring.rabbitmq.stream.uri}")
+    private List<String> uris;
+
+    @Value("${spring.rabbitmq.stream.username}")
+    private String username;
+
+    @Value("${spring.rabbitmq.stream.password}")
+    private String password;
+
     @Bean
     Environment rabbitEnv()
     {
-        var env = Environment.builder().build();
+        var env = Environment.builder()
+                .uris(uris).username(username)
+                .password(password).build();
         env.streamCreator().stream(streamName).create();
         return env;
     }
-
-
 
     @Bean
     Producer producer(Environment environment)
