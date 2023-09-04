@@ -5,7 +5,7 @@ import com.rabbitmq.stream.Producer;
 import nyla.solutions.core.patterns.conversion.Converter;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
-import showcase.high.throughput.microservices.domain.Payment;
+import experiments.streaming.domain.Payment;
 
 import java.util.concurrent.atomic.AtomicLong;
 

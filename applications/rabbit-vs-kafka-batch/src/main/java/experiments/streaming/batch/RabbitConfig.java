@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import showcase.high.throughput.microservices.domain.Payment;
+import experiments.streaming.domain.Payment;
 
 @Configuration
 @Profile("rabbit")

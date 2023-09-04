@@ -5,8 +5,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.beans.factory.annotation.Value;
-import showcase.high.throughput.microservices.domain.Payment;
+import experiments.streaming.domain.Payment;
 
 public class KafkaProducerItemWriter implements ItemWriter<Payment> {
 

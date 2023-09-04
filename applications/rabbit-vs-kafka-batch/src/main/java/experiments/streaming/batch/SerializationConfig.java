@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nyla.solutions.core.patterns.conversion.Converter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import showcase.high.throughput.microservices.domain.Payment;
+import experiments.streaming.domain.Payment;
 
 import java.nio.charset.StandardCharsets;
 

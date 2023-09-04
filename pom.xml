@@ -10,6 +10,7 @@
     <version>1.0.0</version>
     <name>microservices-high-throughput-parent</name>
     <modules>
+        <module>components/report-domain</module>
         <module>components/throughput-domain</module>
         <module>components/rabbit-stream-purge</module>
         <module>components/rabbit-stream-batch</module>

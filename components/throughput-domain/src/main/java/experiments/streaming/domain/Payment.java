@@ -1,4 +1,4 @@
-package showcase.high.throughput.microservices.domain;
+package experiments.streaming.domain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

@@ -6,6 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ReportApp {
     public static void main(String[] args) {
-        SpringApplication.exit(SpringApplication.run(ReportApp.class, args));
+        SpringApplication.run(ReportApp.class, args);
     }
 }
