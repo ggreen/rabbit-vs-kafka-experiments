@@ -1,0 +1,24 @@
+
+batch:
+  file.location: /Users/Projects/solutions/integration/messaging/RabbitMQ/dev/rabbit-vs-kafka-experiments/scripts/generate_batch_file/runtime/transactions.csv
+  chunk.size: 10000
+rabbitmq.stream.name: transaction
+
+#batch.chunk.size: 1
+#batch.core.pool.size: 1
+#rabbitmq.stream.producer.batch.size: 1
+rabbitmq.stream.producer.batch.size: 10000
+batch.core.pool.size: 10
+spring:
+  application:
+    name: rabbit-vs-kafka-batch
+  sql:
+    init:
+      platform: postgres
+  datasource:
+#    url: jdbc:postgresql://localhost:5432/postgres
+    platform: postgres
+  liquibase:
+    # Required running: CREATE SCHEMA IF NOT EXISTS retail;
+    defaultSchema: "evt_stream"
+    change-log: "classpath:db/changelog/postgres/changelog-v1.sql"
