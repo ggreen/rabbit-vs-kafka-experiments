@@ -3,7 +3,6 @@ package experiments.streaming.report.repository;
 import experiments.streaming.report.domain.JobStats;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 

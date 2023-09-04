@@ -4,7 +4,8 @@ package experiments.streaming.report.service;
 import experiments.streaming.report.domain.JobStats;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface JobQueryService {
-    Collection<JobStats> findJobs();
+    List<JobStats> findJobs();
 }

@@ -1,19 +1,28 @@
 package experiments.streaming.report.domain;
 
-public record JobStats(
-        String jobName,
-        int totalCount,
-        String timeMin,
-        String timeMax,
-        String timeAvg,
-        String time90th,
-        String time99th,
-        String time99_99th,
-        String tpsMin,
-        String tpsMax,
-        String tpsAvg,
-        String tps90th,
-        String tps99th,
-        String tps99_99th) {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class JobStats {
+    private String jobName;
+    private int totalCount;
+    private String timeMin;
+    private String timeMax;
+    private String timeAvg;
+    private String time90th;
+    private String time99th;
+    private String time99_99th;
+    private String tpsMin;
+    private String tpsMax;
+    private String tpsAvg;
+    private String tps90th;
+    private String tps99th;
+    private String tps99_99th;
 
 }

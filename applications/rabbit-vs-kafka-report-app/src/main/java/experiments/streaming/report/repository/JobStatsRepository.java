@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface JobStatsRepository {
@@ -43,5 +44,5 @@ public interface JobStatsRepository {
             """;
 
     @Query(value = QUERY)
-    Collection<JobStats> findJobs();
+    List<JobStats> findJobs();
 }

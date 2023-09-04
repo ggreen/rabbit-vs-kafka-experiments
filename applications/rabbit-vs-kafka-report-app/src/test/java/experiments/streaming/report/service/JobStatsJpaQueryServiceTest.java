@@ -10,7 +10,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -21,7 +23,8 @@ class JobStatsJpaQueryServiceTest {
     @Mock
     private JobStatsRepository repository;
     private JobStatsJpaQueryService service;
-    private Collection<JobStats> expected = JavaBeanGeneratorCreator.of(JobStats.class).createCollection(2);
+    private List<JobStats> expected =
+            new ArrayList<JobStats>(JavaBeanGeneratorCreator.of(JobStats.class).createCollection(2));
 
     @BeforeEach
     void setUp() {
