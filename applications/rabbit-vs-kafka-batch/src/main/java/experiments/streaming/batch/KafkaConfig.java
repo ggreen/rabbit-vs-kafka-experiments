@@ -14,7 +14,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.config.TopicBuilder;
 import experiments.streaming.domain.Payment;
+
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+
+import static java.lang.String.valueOf;
 
 /**
  * @author gregory green
@@ -27,11 +32,18 @@ public class KafkaConfig {
     @Value("${batch.apache.kafka.topic.name:transactions}")
     private String topicName;
 
+    @Value("${spring.batch.size:10000}")
+    private int batchSize;
 
     @Bean
     Producer<String,byte[]> kafkaProducer()
     {
-        return new KafkaProducer<String,byte[]>((Map)Config.getProperties());
+        Map<String,Object> properties = new HashMap<String,Object>((Map)Config.getProperties());
+        properties.put("acks", "1");
+        properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        properties.put("value.serializer", "org.apache.kafka.common.serialization.ByteArraySerializer");
+        properties.put("batch.size",valueOf(batchSize));
+        return new KafkaProducer<String,byte[]>(properties);
     }
 
     @Bean

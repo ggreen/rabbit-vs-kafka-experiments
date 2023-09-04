@@ -22,7 +22,7 @@ public class RabbitConfig {
     private String streamName;
 
 
-    @Value("${rabbitmq.stream.producer.batch.size:500}")
+    @Value("${spring.batch.size:10000}")
     private int batchSize;
 
     @Value("${spring.rabbitmq.stream.uri}")
@@ -31,7 +31,7 @@ public class RabbitConfig {
     @Value("${spring.rabbitmq.stream.username}")
     private String username;
 
-    @Value("${spring.rabbitmq.stream.password}")
+    @Value("${spring.rabbitmq.svtream.password}")
     private String password;
 
     @Bean

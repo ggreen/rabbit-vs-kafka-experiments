@@ -53,13 +53,6 @@ python generate_transaction_file.py
 
 Publish 2 million records
 
-## Apache Kafka
-
-Example 
-
-```shell
-java -jar applications/rabbit-vs-kafka-batch/target/rabbit-vs-kafka-batch-0.0.1-SNAPSHOT.jar  --spring.profiles.active=kafka --bootstrap.servers=localhost:9092 --kafka.producer.topic=transaction --value.serializer=org.apache.kafka.common.serialization.ByteArraySerializer --key.serializer=org.apache.kafka.common.serialization.StringSerializer --spring.datasource.url=jdbc:postgresql://localhost:5432/postgres --spring.datasource.username=postgres --spring.datasource.password=
-```
 
 ## RabbitMQ streams
 
@@ -68,6 +61,15 @@ Example
 ```shell
 java -jar applications/rabbit-vs-kafka-batch/target/rabbit-vs-kafka-batch-0.0.1-SNAPSHOT.jar  --spring.profiles.active=rabbit --spring.rabbitmq.stream.uri=rabbitmq-stream://localhost:5552 --spring.rabbitmq.stream.name=transactions --spring.rabbitmq.stream.username=guest --spring.rabbitmq.stream.password=guest --spring.datasource.url=jdbc:postgresql://localhost:5432/postgres --spring.datasource.username=postgres --spring.datasource.password=
 ```
+
+## Apache Kafka
+
+Example 
+
+```shell
+java -jar applications/rabbit-vs-kafka-batch/target/rabbit-vs-kafka-batch-0.0.1-SNAPSHOT.jar  --spring.profiles.active=kafka --bootstrap.servers=localhost:9092 --kafka.producer.topic=transaction --spring.datasource.url=jdbc:postgresql://localhost:5432/postgres --spring.datasource.username=postgres --spring.datasource.password=
+```
+
 
 
 # Report App
@@ -95,14 +97,18 @@ open http://localhost:8080
 ### Delete Kafka Topic
 
 ```shell
-$KAFKA_HOME/bin/kafka-topics.sh --bootstrap-server=localhost:9092  --delete --topic transaction
+$KAFKA_HOME/bin/kafka-topics.sh --bootstrap-server=localhost:9092  --delete --topic transactions
 ```
 ### Delete RabbitMQ Stream
 
 ```shell
-rabbitmqctl --node rabbit delete_queue transaction
+rabbitmqctl --node rabbit delete_queue transactions
 ```
 
+### Delete Spring Batch Job Repository
 
+```shell
+psql -U postgres -d postgres -c 'DROP SCHEMA evt_stream CASCADE'
+```
 
 # Running
