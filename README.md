@@ -13,7 +13,7 @@ performance differences between Apache Kafka and RabbitMQ streams
 ## Setup
 
 
-| Step | Activity                                                                           | Notes                                                                                                                                                                     |
+| Step | Activity                                                                           | Examples/Script                                                                                                                                                           |
 |------|------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 1    | RabbitMQ - Setup [Download/Install](https://rabbitmq.com/download.html)            | ```brew install rabbitmq```                                                                                                                                               |
 | 2    | RabbitMQ -[Enable Stream Plugin](https://rabbitmq.com/stream.html#enabling-plugin) | ```rabbitmq-plugins enable rabbitmq_stream```                                                                                                                             |
