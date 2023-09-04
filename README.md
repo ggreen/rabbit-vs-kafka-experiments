@@ -13,14 +13,14 @@ performance differences between Apache Kafka and RabbitMQ streams
 ## Setup
 
 
-| Step | Activity                                                                           | Notes                                                                                                                                                               |
-|------|------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1    | RabbitMQ - Setup [Download/Install](https://rabbitmq.com/download.html)            | brew install rabbitmq                                                                                                                                               |
-| 2    | RabbitMQ -[Enable Stream Plugin](https://rabbitmq.com/stream.html#enabling-plugin) | rabbitmq-plugins enable rabbitmq_stream                                                                                                                             |
-| 3    | Kafka -[Download Apache Kafka](https://kafka.apache.org/downloads)                 | See https://kafka.apache.org/quickstart                                                                                                                             | 
-| 4    | Kafka - Start Zookeeper                                                            | export KAFKA_HOME=/Users/devtools/integration/messaging/apacheKafka/kafka_2.13-3.5.1 && cd $KAFKA_HOME && bin/zookeeper-server-start.sh config/zookeeper.properties |
-| 5    | Kafka - Start Kafka Broker                                                         | export KAFKA_HOME=/Users/devtools/integration/messaging/apacheKafka/kafka_2.13-3.5.1 && cd $KAFKA_HOME &&bin/kafka-server-start.sh config/server.properties         |
-| 6    | Postgres - [Download/Install Postgres](https://www.postgresql.org/download/)       | brew install postgresql@14                                                                                                                                          |
+| Step | Activity                                                                           | Notes                                                                                                                                                                     |
+|------|------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1    | RabbitMQ - Setup [Download/Install](https://rabbitmq.com/download.html)            | ```brew install rabbitmq```                                                                                                                                               |
+| 2    | RabbitMQ -[Enable Stream Plugin](https://rabbitmq.com/stream.html#enabling-plugin) | ```rabbitmq-plugins enable rabbitmq_stream```                                                                                                                             |
+| 3    | Kafka -[Download Apache Kafka](https://kafka.apache.org/downloads)                 | See https://kafka.apache.org/quickstart                                                                                                                                   | 
+| 4    | Kafka - Start Zookeeper                                                            | ```export KAFKA_HOME=/Users/devtools/integration/messaging/apacheKafka/kafka_2.13-3.5.1 && cd $KAFKA_HOME && bin/zookeeper-server-start.sh config/zookeeper.properties``` |
+| 5    | Kafka - Start Kafka Broker                                                         | ```export KAFKA_HOME=/Users/devtools/integration/messaging/apacheKafka/kafka_2.13-3.5.1 && cd $KAFKA_HOME &&bin/kafka-server-start.sh config/server.properties```         |
+| 6    | Postgres - [Download/Install Postgres](https://www.postgresql.org/download/)       | ```brew install postgresql@14```                                                                                                                                          |
 
 
 
