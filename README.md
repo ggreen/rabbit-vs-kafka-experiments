@@ -11,7 +11,7 @@ For years, RabbitMQ was not considered for very high throughput requirements. [R
 The goal of this project is for developers and architectures to explore if RabbitMQ streams has a comparable performance throughput to Apache Kafka. Also see [RabbitMQ vs Kafka: How to Choose an Event-Streaming Broker](https://tanzu.vmware.com/content/blog/rabbitmq-event-streaming-broker).
 
 The following is an example report of the Transactions Per Second (TPS) using the example Spring Batch application to publish 2 millions records. 
-The experiment were executed on a Mac OS laptop,  with 32 GB memory, SSD drive, and 10 CPU core  (Apple M1 Max) on September 5 2023. 
+The experiments were executed on a Mac OS laptop,  with 32 GB memory, SSD drive, and 10 CPU core  (Apple M1 Max) on September 5 2023. 
 It uses RabbitMQ version 12.2 and Kafka version 2.13-3.5.1
 
 
