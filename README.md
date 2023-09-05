@@ -24,7 +24,7 @@ Note: *totalCount* is the total number of Spring Batch job executions.
 - [Java Version 17](https://jdk.java.net/17/)
 - RabbitMQ Version 3.11 and highers
 - [Apache Kafka](https://kafka.apache.org) version 3.5 and higher
-- Postgres version 14 and higher (used for the Spring Batch job repository.)
+- Postgres version 14 and higher (used for the [Spring Batch job repository](https://docs.spring.io/spring-batch/docs/current/reference/html/job.html#configuringJobRepository).)
 
 ## Building 
 
