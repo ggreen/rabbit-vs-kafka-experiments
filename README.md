@@ -122,5 +122,3 @@ rabbitmqctl --node rabbit delete_queue transactions
 ```shell
 psql -U postgres -d postgres -c 'DROP SCHEMA evt_stream CASCADE'
 ```
-
-# Running
