@@ -12,7 +12,7 @@ The goal of this project is for developers and architectures to explore if Rabbi
 
 The following is an example report of a Transactions Per Second (TPS)  using the example Spring Batch application to publish of 2 millions records. 
 The experiment were executed on a Mac OS laptop,  with 32 GB memory, SSD drive, and 10 CPU core  (Apple M1 Max) on September 5 2023. 
-It used RabbitMQ version 12.2 and Kafka version 2.13-3.5.1
+It uses RabbitMQ version 12.2 and Kafka version 2.13-3.5.1
 
 
 Note: *totalCount* is the total number of Spring Batch job executions.
