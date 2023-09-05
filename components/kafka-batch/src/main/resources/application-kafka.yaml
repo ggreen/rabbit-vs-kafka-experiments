@@ -1,0 +1,6 @@
+spring:
+  kafka:
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: 0

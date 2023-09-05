@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nyla.solutions.core.patterns.conversion.Converter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import experiments.streaming.domain.Payment;
+import experiments.streaming.domain.Transaction;
 
 import java.nio.charset.StandardCharsets;
 
@@ -18,7 +18,7 @@ public class SerializationConfig {
     }
 
     @Bean
-    Converter<Payment,byte[]> serializer(ObjectMapper objectMapper)
+    Converter<Transaction,byte[]> serializer(ObjectMapper objectMapper)
     {
         return transaction -> {
             try {

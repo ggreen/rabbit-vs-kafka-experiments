@@ -13,15 +13,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.batch.item.Chunk;
-import experiments.streaming.domain.Payment;
+import experiments.streaming.domain.Transaction;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test for RabbitMQStreamWriter
+ * @author gregory green
+ */
 @ExtendWith(MockitoExtension.class)
 class RabbitMQStreamWriterTest {
 
@@ -31,9 +34,9 @@ class RabbitMQStreamWriterTest {
 
     @Mock
     private MessageBuilder messageBuilder;
-    private Payment expected = JavaBeanGeneratorCreator.of(Payment.class).create();
+    private Transaction expected = JavaBeanGeneratorCreator.of(Transaction.class).create();
     @Mock
-    private Converter<Payment,byte[]> serializer;
+    private Converter<Transaction,byte[]> serializer;
 
     @Mock
     private Message message;
@@ -41,7 +44,7 @@ class RabbitMQStreamWriterTest {
     @Mock
     private MessageBuilder.ApplicationPropertiesBuilder propertiesBuilders;
     private long expectedCount = 0;
-    private Chunk<Payment> list;
+    private Chunk<Transaction> list;
 
 
     @BeforeEach
@@ -50,13 +53,11 @@ class RabbitMQStreamWriterTest {
         list = new Chunk<>(asList(expected));
     }
 
+    @DisplayName("GIVEN transaction WHEN write THEN publish")
     @Test
-    void given_transaction_when_write_then_publish() throws Exception {
+    void publish() throws Exception {
 
         when(producer.messageBuilder()).thenReturn( messageBuilder);
-        when(messageBuilder.applicationProperties()).thenReturn(propertiesBuilders);
-        when(propertiesBuilders.entry(anyString(),anyString())).thenReturn(propertiesBuilders);
-        when(propertiesBuilders.messageBuilder()).thenReturn(messageBuilder);
         when(messageBuilder.addData(any())).thenReturn(messageBuilder);
         when(messageBuilder.build()).thenReturn(message);
 

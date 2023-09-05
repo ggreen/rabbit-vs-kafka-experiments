@@ -5,22 +5,23 @@ import com.rabbitmq.stream.Producer;
 import nyla.solutions.core.patterns.conversion.Converter;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
-import experiments.streaming.domain.Payment;
+import experiments.streaming.domain.Transaction;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author gregory green
  */
-public class RabbitMQStreamWriter implements ItemWriter<Payment> {
+public class RabbitMQStreamWriter implements ItemWriter<Transaction> {
 
     private final Producer producer;
-    private final Converter<Payment,byte[]> serializer;
+    private final Converter<Transaction,byte[]> serializer;
     private final ConfirmationHandler handler;
     private static final AtomicLong count = new AtomicLong();
 
 
-    public RabbitMQStreamWriter(Producer producer, Converter<Payment,byte[]> serializer) {
+    public RabbitMQStreamWriter(Producer producer,
+                                Converter<Transaction,byte[]> serializer ) {
         this.producer = producer;
         this.serializer = serializer;
         //Publish Confirm with an atomic long
@@ -28,11 +29,9 @@ public class RabbitMQStreamWriter implements ItemWriter<Payment> {
     }
 
     @Override
-    public void write(Chunk<? extends Payment> items) throws Exception {
+    public void write(Chunk<? extends Transaction> items) throws Exception {
         items.forEach(transaction ->
                 producer.send(producer.messageBuilder()
-                        .applicationProperties().entry("contentType",
-                                "application/json").messageBuilder()
                         .addData(serializer.convert(transaction)).build(),handler));
     }
 

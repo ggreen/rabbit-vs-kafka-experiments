@@ -10,10 +10,10 @@
     <version>1.0.0</version>
     <name>microservices-high-throughput-parent</name>
     <modules>
-        <module>components/report-domain</module>
         <module>components/throughput-domain</module>
         <module>components/rabbit-stream-purge</module>
         <module>components/rabbit-stream-batch</module>
+        <module>components/kafka-batch</module>
         <module>applications/rabbit-vs-kafka-batch</module>
         <module>applications/rabbit-vs-kafka-report-app</module>
     </modules>

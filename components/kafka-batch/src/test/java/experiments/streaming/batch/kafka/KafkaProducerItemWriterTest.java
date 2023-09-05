@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.batch.item.Chunk;
-import experiments.streaming.domain.Payment;
+import experiments.streaming.domain.Transaction;
 
 import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,9 +22,9 @@ class KafkaProducerItemWriterTest {
     @Mock
     private Producer<String,byte[]> producer;
     @Mock
-    private Converter<Payment,byte[]> converter;
+    private Converter<Transaction,byte[]> converter;
 
-    private Chunk<Payment> list = new Chunk<>(asList(JavaBeanGeneratorCreator.of(Payment.class).create()));
+    private Chunk<Transaction> list = new Chunk<>(asList(JavaBeanGeneratorCreator.of(Transaction.class).create()));
     private String topicName ="topic";
 
     @BeforeEach

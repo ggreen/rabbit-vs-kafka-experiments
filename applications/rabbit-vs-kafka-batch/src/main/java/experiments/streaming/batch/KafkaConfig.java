@@ -13,11 +13,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.config.TopicBuilder;
-import experiments.streaming.domain.Payment;
+import experiments.streaming.domain.Transaction;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import static java.lang.String.valueOf;
 
@@ -39,7 +38,7 @@ public class KafkaConfig {
     Producer<String,byte[]> kafkaProducer()
     {
         Map<String,Object> properties = new HashMap<String,Object>((Map)Config.getProperties());
-        properties.put("acks", "1");
+        properties.put("acks", "1"); //Publish confirm
         properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.ByteArraySerializer");
         properties.put("batch.size",valueOf(batchSize));
@@ -47,7 +46,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    ItemWriter<Payment> writer(Producer<String,byte[]> producer, Converter<Payment,byte[]> converter)
+    ItemWriter<Transaction> writer(Producer<String,byte[]> producer, Converter<Transaction,byte[]> converter)
     {
         var writer = new KafkaProducerItemWriter(producer,converter,topicName);
         return writer;

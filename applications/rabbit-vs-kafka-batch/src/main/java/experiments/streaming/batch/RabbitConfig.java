@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import experiments.streaming.domain.Payment;
+import experiments.streaming.domain.Transaction;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class RabbitConfig {
     @Value("${spring.rabbitmq.stream.username}")
     private String username;
 
-    @Value("${spring.rabbitmq.svtream.password}")
+    @Value("${spring.rabbitmq.stream.password}")
     private String password;
 
     @Bean
@@ -53,7 +53,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    RabbitMQStreamWriter itemWriter(Producer producer, Converter<Payment, byte[]> converter)
+    RabbitMQStreamWriter itemWriter(Producer producer, Converter<Transaction, byte[]> converter)
     {
         return new RabbitMQStreamWriter(producer,converter);
     }

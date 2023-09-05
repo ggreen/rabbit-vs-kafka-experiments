@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
-import experiments.streaming.domain.Payment;
+import experiments.streaming.domain.Transaction;
 
 import java.time.LocalDateTime;
 
@@ -55,12 +55,12 @@ public class BatchConfig {
     @Bean
     FlatFileItemReader reader()
     {
-       return  new FlatFileItemReaderBuilder<Payment>()
+       return  new FlatFileItemReaderBuilder<Transaction>()
                .name(applicationName+"-reader")
                .linesToSkip(1) //skip header
                .delimited()
                .names(new String[]{"id","details","contact","location","amount","timestamp"})
-               .fieldSetMapper(new RecordFieldSetMapper<Payment>(Payment.class))
+               .fieldSetMapper(new RecordFieldSetMapper<Transaction>(Transaction.class))
                .resource(new FileSystemResource(fileLocation))
                .build();
     }
@@ -96,7 +96,7 @@ public class BatchConfig {
     }
 
     @Bean
-    public Step step(ItemWriter<Payment> writer,
+    public Step step(ItemWriter<Transaction> writer,
                      JobRepository jobRepository,
                      PlatformTransactionManager transactionManager,
                      ThreadPoolTaskExecutor taskExecutor) {
@@ -106,7 +106,7 @@ public class BatchConfig {
 
 
         return new StepBuilder(stepName,jobRepository)
-                .<Payment, Payment> chunk(chunkSize, transactionManager)
+                .<Transaction, Transaction> chunk(chunkSize, transactionManager)
                 .reader(reader())
                 .writer(writer)
                 .taskExecutor(taskExecutor)
