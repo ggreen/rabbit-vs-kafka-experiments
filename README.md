@@ -7,6 +7,20 @@ The current version of only compares the publishing throughput of the
 [RabbitMQ](https://www.rabbitmq.com) and Kafka using [Spring Batch](https://spring.io/projects/spring-batch).
 
 
+
+For years, RabbitMQ was not considered for very high throughput requirements.
+RabbitMQ stream (introduce in RabbitMQ version 3.9) now allows RabbitMQ to compete for high throughput use cases. 
+The goal is project is for developer and architectures to 
+explore if RabbitMQ streams has a comparable performance throughput to Apache Kafka.
+
+The following is an example report of a Transactions Per Second (TPS) Spring Batch Applications publishing of 2 millions records. Mac OS laptp, 
+with 32 GB memory, SSD drive, and 10 CPU core  (Apple M1 Max).
+
+
+Note: *totalCount* is the total number of Job Batch executions
+
+![Batch Report](docs/img/example-report.png)
+
 ### Prerequisite
 
 - [Java Version 17](https://jdk.java.net/17/)
