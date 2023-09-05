@@ -2,7 +2,7 @@
 
 This project provides a simplified way to evaluate 
 performance differences between [Apache Kafka](https://kafka.apache.org/) and [RabbitMQ streams](https://www.rabbitmq.com/streams.html).
-The current version of only compares the publishing throughput of the 
+The current version only compares the publishing throughput of the 
 [RabbitMQ](https://www.rabbitmq.com) and Kafka using [Spring Batch](https://spring.io/projects/spring-batch).
 
 
