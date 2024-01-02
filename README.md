@@ -28,7 +28,7 @@ Note: *totalCount* is the total number of Spring Batch job executions.
 
 ## Building 
 
-Use the maven ./mvnw to build the solution
+Use the maven ./mvnw script to build the solution
 
 ```shell
 ./mvnw package

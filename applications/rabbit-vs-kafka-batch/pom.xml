@@ -102,6 +102,11 @@
             <artifactId>kafka-batch</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>experiments.streaming</groupId>
+            <artifactId>nats-batch</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
