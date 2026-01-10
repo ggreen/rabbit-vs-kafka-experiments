@@ -3,9 +3,9 @@ package experiments.streaming.batch.kafka;
 import nyla.solutions.core.patterns.conversion.Converter;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.springframework.batch.item.Chunk;
-import org.springframework.batch.item.ItemWriter;
 import experiments.streaming.domain.Transaction;
+import org.springframework.batch.infrastructure.item.Chunk;
+import org.springframework.batch.infrastructure.item.ItemWriter;
 
 public class KafkaProducerItemWriter implements ItemWriter<Transaction> {
 

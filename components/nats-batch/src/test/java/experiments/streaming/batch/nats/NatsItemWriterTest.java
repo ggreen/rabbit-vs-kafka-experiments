@@ -5,19 +5,17 @@ import io.nats.client.JetStream;
 import io.nats.client.api.PublishAck;
 import lombok.SneakyThrows;
 import nyla.solutions.core.patterns.conversion.Converter;
-import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.batch.item.Chunk;
+import org.springframework.batch.infrastructure.item.Chunk;
 
 import java.nio.charset.StandardCharsets;
 
 import static java.util.Arrays.asList;
-import static nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator.of;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;

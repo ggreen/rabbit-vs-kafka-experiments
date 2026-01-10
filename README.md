@@ -39,17 +39,18 @@ Use the maven ./mvnw script to build the solution
 Example Kafka Home directory
 
 ```shell
-export KAFKA_HOME=/Users/devtools/integration/messaging/apacheKafka/kafka_2.13-3.5.1
+export KAFKA_HOME=/Users/devtools/integration/messaging/apacheKafka/kafka_2.13-4.1.1
 ```
 
-| Step | Activity                                                                           | Examples/Script                                                                    |
-|------|------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
-| 1    | RabbitMQ - Setup [Download/Install](https://rabbitmq.com/download.html)            | ```brew install rabbitmq```                                                        |
-| 2    | RabbitMQ -[Enable Stream Plugin](https://rabbitmq.com/stream.html#enabling-plugin) | ```rabbitmq-plugins enable rabbitmq_stream```                                      |
-| 3    | Kafka -[Download Apache Kafka](https://kafka.apache.org/downloads)                 | See https://kafka.apache.org/quickstart                                            | 
-| 4    | Kafka - Start Zookeeper                                                            | ```cd $KAFKA_HOME && bin/zookeeper-server-start.sh config/zookeeper.properties&``` |
-| 5    | Kafka - Start Kafka Broker                                                         | ```cd $KAFKA_HOME && bin/kafka-server-start.sh config/server.properties &```       |
-| 6    | Postgres - [Download/Install Postgres](https://www.postgresql.org/download/)       | ```brew install postgresql@14```                                                   |
+| Step | Activity                                                                           | Examples/Script                                                                                                   |
+|------|------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| 1    | RabbitMQ - Setup [Download/Install](https://rabbitmq.com/download.html)            | ```brew install rabbitmq```                                                                                       |
+| 2    | RabbitMQ -[Enable Stream Plugin](https://rabbitmq.com/stream.html#enabling-plugin) | ```rabbitmq-plugins enable rabbitmq_stream```                                                                     |
+| 3    | Kafka -[Download Apache Kafka](https://kafka.apache.org/downloads)                 | See https://kafka.apache.org/quickstart                                                                           | 
+| 4    | Kafka - Generate a Cluster UUID                                                    | ```cd $KAFKA_HOME && KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"```                                    |
+| 5    | Kafka - Format Log Directories                                                     | ```cd $KAFKA_HOME && bin/kafka-storage.sh format --standalone -t $KAFKA_CLUSTER_ID -c config/server.properties``` |
+ | 6    | Kafka -  Start the Kafka Server                                                    | ```cd $KAFKA_HOME && bin/kafka-server-start.sh config/server.properties``` |
+| 7    | Postgres - [Download/Install Postgres](https://www.postgresql.org/download/)       | ```brew install postgresql@14```                                                                                  |
 
 
 

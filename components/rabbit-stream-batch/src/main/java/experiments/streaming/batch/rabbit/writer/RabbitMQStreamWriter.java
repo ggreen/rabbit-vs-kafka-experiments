@@ -3,9 +3,9 @@ package experiments.streaming.batch.rabbit.writer;
 import com.rabbitmq.stream.ConfirmationHandler;
 import com.rabbitmq.stream.Producer;
 import nyla.solutions.core.patterns.conversion.Converter;
-import org.springframework.batch.item.Chunk;
-import org.springframework.batch.item.ItemWriter;
 import experiments.streaming.domain.Transaction;
+import org.springframework.batch.infrastructure.item.Chunk;
+import org.springframework.batch.infrastructure.item.ItemWriter;
 
 import java.util.concurrent.atomic.AtomicLong;
 

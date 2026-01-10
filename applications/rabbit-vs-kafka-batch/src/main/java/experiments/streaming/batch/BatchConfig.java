@@ -1,21 +1,23 @@
 package experiments.streaming.batch;
 
+import experiments.streaming.domain.Transaction;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameter;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.job.parameters.JobParameter;
+import org.springframework.batch.core.job.parameters.JobParameters;
+import org.springframework.batch.core.job.parameters.JobParametersBuilder;
+import org.springframework.batch.core.job.parameters.RunIdIncrementer;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.core.launch.support.TaskExecutorJobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
-import org.springframework.batch.item.file.mapping.RecordFieldSetMapper;
+import org.springframework.batch.infrastructure.item.ItemWriter;
+import org.springframework.batch.infrastructure.item.file.FlatFileItemReader;
+import org.springframework.batch.infrastructure.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.infrastructure.item.file.mapping.RecordFieldSetMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -23,14 +25,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
-import experiments.streaming.domain.Transaction;
 
 import java.time.LocalDateTime;
 
-import static nyla.solutions.core.util.Organizer.toMap;
 
 @Configuration
-@EnableBatchProcessing(tablePrefix = "${spring.liquibase.defaultSchema}.batch_")
+@EnableBatchProcessing
+//        (tablePrefix = "${spring.liquibase.defaultSchema}.batch_")
 @Slf4j
 public class BatchConfig {
 
@@ -66,14 +67,6 @@ public class BatchConfig {
     }
 
     @Bean
-    public JobLauncher jobLauncher(JobRepository jobRepository) throws Exception {
-        TaskExecutorJobLauncher jobLauncher = new TaskExecutorJobLauncher();
-        jobLauncher.setJobRepository(jobRepository);
-        jobLauncher.afterPropertiesSet();
-        return jobLauncher;
-    }
-
-    @Bean
     public Job importUserJob(
             JobRepository jobRepository, Step step) {
         return new JobBuilder(jobName,jobRepository)
@@ -83,14 +76,16 @@ public class BatchConfig {
     }
 
     @Bean
-    CommandLineRunner runner(JobLauncher jobLauncher, Job job)
+    CommandLineRunner runner(JobOperator jobOperator, Job job)
     {
         return args -> {
 
-            jobLauncher.run(job,new JobParameters(
-                    toMap("start",
-                            new JobParameter<LocalDateTime>(LocalDateTime.now(),
-                                    LocalDateTime.class))));
+            JobParameter<?> jobParameter = new JobParameter<LocalDateTime>("time",
+                    LocalDateTime.now(),LocalDateTime.class);
+
+            JobParameters jobParameters = new JobParametersBuilder()
+                    .addJobParameter(jobParameter).toJobParameters();
+            jobOperator.start(job, jobParameters);
 
         };
     }
@@ -103,13 +98,10 @@ public class BatchConfig {
 
         taskExecutor.setCorePoolSize(corePoolSize);
 
-
-
-        return new StepBuilder(stepName,jobRepository)
-                .<Transaction, Transaction> chunk(chunkSize, transactionManager)
+        return new StepBuilder(jobRepository)
+                .<String, String>chunk(10).transactionManager(transactionManager)
                 .reader(reader())
                 .writer(writer)
-                .taskExecutor(taskExecutor)
                 .build();
     }
 

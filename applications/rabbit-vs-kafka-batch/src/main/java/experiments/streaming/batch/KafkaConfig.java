@@ -7,7 +7,7 @@ import nyla.solutions.core.util.Config;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
-import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.infrastructure.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +37,7 @@ public class KafkaConfig {
     @Bean
     Producer<String,byte[]> kafkaProducer()
     {
-        Map<String,Object> properties = new HashMap<String,Object>((Map)Config.getProperties());
+        Map<String,Object> properties = new HashMap<String,Object>((Map)Config.settings().getProperties());
         properties.put("acks", "1"); //Publish confirm
         properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.ByteArraySerializer");
