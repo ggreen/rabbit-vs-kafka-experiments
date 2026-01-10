@@ -10,7 +10,7 @@
     </parent>
     <groupId>experiments.streaming</groupId>
     <artifactId>kafka-batch</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>kafka-batch</name>
     <description>kafka-batch</description>
     <properties>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>experiments.streaming</groupId>
             <artifactId>throughput-domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.kafka</groupId>

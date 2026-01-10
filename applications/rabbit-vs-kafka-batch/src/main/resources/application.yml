@@ -19,6 +19,7 @@ spring:
 #    url: jdbc:postgresql://localhost:5432/postgres
     platform: postgres
   liquibase:
+    enabled: true
     # Required running: CREATE SCHEMA IF NOT EXISTS retail;
     defaultSchema: "evt_stream"
     change-log: "classpath:db/changelog/postgres/changelog-v1.sql"
