@@ -24,8 +24,8 @@ class KafkaProducerItemWriterTest {
     @Mock
     private Converter<Transaction,byte[]> converter;
 
-    private Chunk<Transaction> list = new Chunk<>(asList(JavaBeanGeneratorCreator.of(Transaction.class).create()));
-    private String topicName ="topic";
+    private final Chunk<Transaction> list = new Chunk<>(asList(JavaBeanGeneratorCreator.of(Transaction.class).create()));
+    private final String topicName ="topic";
 
     @BeforeEach
     void setUp() {
@@ -36,6 +36,6 @@ class KafkaProducerItemWriterTest {
     void write() throws Exception {
 
         subject.write(list);
-        verify(producer).send(any());
+        verify(producer).send(any(),any());
     }
 }
