@@ -102,7 +102,7 @@ public class BatchConfig {
         taskExecutor.setCorePoolSize(corePoolSize);
 
         return new StepBuilder(jobRepository)
-                .<String, String>chunk(10).transactionManager(transactionManager)
+                .<String, String>chunk(chunkSize).transactionManager(transactionManager)
                 .reader(reader())
                 .writer(writer)
                 .build();
