@@ -56,43 +56,28 @@ export KAFKA_HOME=/Users/devtools/integration/messaging/apacheKafka/kafka_2.13-4
 | 3    | Kafka - Generate a Cluster UUID                                                    | ```cd $KAFKA_HOME && KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"```                                    |
 | 4    | Kafka - Format Log Directories                                                     | ```cd $KAFKA_HOME && bin/kafka-storage.sh format --standalone -t $KAFKA_CLUSTER_ID -c config/server.properties``` |
 | 5    | Postgres - See [Download/Install Postgres](https://www.postgresql.org/download/)   | Example ```brew install postgresql@14```                                                                          |
+### Start Services
 
-
-
-## Generate Input File
-Generate Input file with 2 Million Records
-
-```shell
-cd scripts/generate_batch_file
-python generate_transaction_file.py
-```
-
-# Spring Batch Application 
-
-Publish 2 million records
-
-Notes assert Postgres, RabbitMQ, and Kafka are running.
-
-- Start RabbitM (if not started)
+#### Start RabbitM (if not started)
 
 ```shell
 brew services start rabbitmq
 ```
 
-Enable Stream Plugin RabbitMQ (first time only) -[Enable Stream Plugin](https://rabbitmq.com/stream.html#enabling-plugin) 
+Enable Stream Plugin RabbitMQ (first time only) -[Enable Stream Plugin](https://rabbitmq.com/stream.html#enabling-plugin)
 
 ```shell
 export RABBITMQ_HOME=/opt/homebrew/opt/rabbitmq
 $RABBITMQ_HOME/sbin/rabbitmq-plugins enable rabbitmq_stream
 ```
 
-- Start Kafka ((if not started))
+#### Start Kafka (if not started)
 
 ```shell
 cd $KAFKA_HOME && bin/kafka-server-start.sh config/server.properties
 ```
 
-- Start Postgres (if not started)
+#### Start Postgres (if not started)
 
 ```shell
 brew services start postgresql@14
@@ -113,6 +98,22 @@ CREATE ROLE postgres
   CREATEDB
   CREATEROLE;
 ```
+-------------
+
+## Generate Input File
+Generate Input file with 2 Million Records
+
+```shell
+cd scripts/generate_batch_file
+python generate_transaction_file.py
+```
+------------------
+
+# Spring Batch Application 
+
+Publish 2 million records
+
+Notes assert Postgres, RabbitMQ, and Kafka are running.
 
 ## RabbitMQ streams
 
