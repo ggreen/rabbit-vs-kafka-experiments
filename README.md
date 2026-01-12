@@ -17,6 +17,7 @@ It uses RabbitMQ version 12.2 and Kafka version 2.13-3.5.1
 
 Note: *totalCount* is the total number of Spring Batch job executions.
 
+
 ![Batch Report](docs/img/example-report.png)
 
 ### Prerequisite
@@ -75,6 +76,20 @@ Example
 java -Xms1g -Xmx1g -jar applications/rabbit-vs-kafka-batch/target/rabbit-vs-kafka-batch-1.0.0.jar  --spring.profiles.active=rabbit --spring.rabbitmq.stream.uri=rabbitmq-stream://localhost:5552 --spring.rabbitmq.stream.name=transactions --spring.rabbitmq.stream.username=guest --spring.rabbitmq.stream.password=guest --spring.datasource.url=jdbc:postgresql://localhost:5432/postgres --spring.datasource.username=postgres --spring.datasource.password=
 ```
 
+See [RabbitMQStreamWriter.java](components/rabbit-stream-batch/src/main/java/experiments/streaming/batch/rabbit/writer/RabbitMQStreamWriter.java)
+
+```java
+public class RabbitMQStreamWriter implements ItemWriter<Transaction> {
+    //...
+    @Override
+    public void write(Chunk<? extends Transaction> items) throws Exception {
+        items.forEach(transaction ->
+                producer.send(producer.messageBuilder()
+                        .addData(serializer.convert(transaction)).build(),handler));
+    }
+}
+```
+
 ## Apache Kafka
 
 Example 
@@ -83,7 +98,23 @@ Example
 java  -Xms1g -Xmx1g  -jar applications/rabbit-vs-kafka-batch/target/rabbit-vs-kafka-batch-1.0.0.jar  --spring.profiles.active=kafka --bootstrap.servers=localhost:9092 --kafka.producer.topic=transaction --spring.datasource.url=jdbc:postgresql://localhost:5432/postgres --spring.datasource.username=postgres --spring.datasource.password=
 ```
 
+See [KafkaProducerItemWriter.java](components/kafka-batch/src/main/java/experiments/streaming/batch/kafka/KafkaProducerItemWriter.java) 
 
+```java
+public class KafkaProducerItemWriter implements ItemWriter<Transaction> {
+    //...
+    @Override
+    public void write(Chunk<? extends Transaction> items) throws Exception {
+            items.forEach(transaction ->
+                    producer.send(new ProducerRecord<String,byte[]>(
+                            topicName,
+                            transaction.id(),
+                            serializer.convert(transaction)
+                    ), handler));
+    }
+}
+
+```
 
 # Report App
 
