@@ -12,7 +12,6 @@ The goal of this project is for developers and architectures to explore if Rabbi
 
 The following is an example report of the Transactions Per Second (TPS) using the example Spring Batch application to publish 2 millions records. 
 The experiments were executed on a Mac OS laptop,  with 32 GB memory, SSD drive, and 10 CPU cores  (Apple M1 Max). 
-It uses RabbitMQ version 12.2 and Kafka version 2.13-3.5.1
 
 
 Note: *totalCount* is the total number of Spring Batch job executions.
@@ -22,9 +21,9 @@ Note: *totalCount* is the total number of Spring Batch job executions.
 
 ### Prerequisite
 
-- [Java Version 17](https://jdk.java.net/17/)
-- RabbitMQ Version 3.11 and highers
-- [Apache Kafka](https://kafka.apache.org) version 3.5 and higher
+- [Java Version 17](https://jdk.java.net/17/) or Java 21
+- RabbitMQ Version 4.2 and higher
+- [Apache Kafka](https://kafka.apache.org) version 4.1.1 and higher
 - Postgres version 14 and higher (used for the [Spring Batch job repository](https://docs.spring.io/spring-batch/docs/current/reference/html/job.html#configuringJobRepository).)
 
 ## Building 
@@ -37,6 +36,13 @@ Use the maven ./mvnw script to build the solution
 
 ## Setup
 
+
+Clone Repository
+```shell
+git clone  https://github.com/ggreen/rabbit-vs-kafka-experiments.git
+cd rabbit-vs-kafka-experiments
+```
+
 Example Kafka Home directory
 
 ```shell
@@ -45,13 +51,11 @@ export KAFKA_HOME=/Users/devtools/integration/messaging/apacheKafka/kafka_2.13-4
 
 | Step | Activity                                                                           | Examples/Script                                                                                                   |
 |------|------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| 1    | RabbitMQ - Setup [Download/Install](https://rabbitmq.com/download.html)            | ```brew install rabbitmq```                                                                                       |
-| 2    | RabbitMQ -[Enable Stream Plugin](https://rabbitmq.com/stream.html#enabling-plugin) | ```rabbitmq-plugins enable rabbitmq_stream```                                                                     |
-| 3    | Kafka -[Download Apache Kafka](https://kafka.apache.org/downloads)                 | See https://kafka.apache.org/quickstart                                                                           | 
-| 4    | Kafka - Generate a Cluster UUID                                                    | ```cd $KAFKA_HOME && KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"```                                    |
-| 5    | Kafka - Format Log Directories                                                     | ```cd $KAFKA_HOME && bin/kafka-storage.sh format --standalone -t $KAFKA_CLUSTER_ID -c config/server.properties``` |
- | 6    | Kafka -  Start the Kafka Server                                                    | ```cd $KAFKA_HOME && bin/kafka-server-start.sh config/server.properties``` |
-| 7    | Postgres - [Download/Install Postgres](https://www.postgresql.org/download/)       | ```brew install postgresql@14```                                                                                  |
+| 1    | RabbitMQ - See Setup [Download/Install](https://rabbitmq.com/download.html)        | Example ```brew install rabbitmq```                                                                               |
+| 2    | Kafka -[Download Apache Kafka](https://kafka.apache.org/downloads)                 | See https://kafka.apache.org/quickstart                                                                           | 
+| 3    | Kafka - Generate a Cluster UUID                                                    | ```cd $KAFKA_HOME && KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"```                                    |
+| 4    | Kafka - Format Log Directories                                                     | ```cd $KAFKA_HOME && bin/kafka-storage.sh format --standalone -t $KAFKA_CLUSTER_ID -c config/server.properties``` |
+| 5    | Postgres - See [Download/Install Postgres](https://www.postgresql.org/download/)   | Example ```brew install postgresql@14```                                                                          |
 
 
 
@@ -67,6 +71,48 @@ python generate_transaction_file.py
 
 Publish 2 million records
 
+Notes assert Postgres, RabbitMQ, and Kafka are running.
+
+- Start RabbitM (if not started)
+
+```shell
+brew services start rabbitmq
+```
+
+Enable Stream Plugin RabbitMQ (first time only) -[Enable Stream Plugin](https://rabbitmq.com/stream.html#enabling-plugin) 
+
+```shell
+export RABBITMQ_HOME=/opt/homebrew/opt/rabbitmq
+$RABBITMQ_HOME/sbin/rabbitmq-plugins enable rabbitmq_stream
+```
+
+- Start Kafka ((if not started))
+
+```shell
+cd $KAFKA_HOME && bin/kafka-server-start.sh config/server.properties
+```
+
+- Start Postgres (if not started)
+
+```shell
+brew services start postgresql@14
+```
+
+Create "postgres" User (if not created)
+
+Login
+```shell
+psql -d postgres
+```
+
+Create Role
+```shell
+CREATE ROLE postgres
+  WITH LOGIN
+  SUPERUSER
+  CREATEDB
+  CREATEROLE;
+```
 
 ## RabbitMQ streams
 
@@ -121,7 +167,6 @@ public class KafkaProducerItemWriter implements ItemWriter<Transaction> {
 You can use the [rabbit-vs-kafka-report-app](applications/rabbit-vs-kafka-report-app) to view the results.
 
 ## Run Application
-
 
 Example
 
